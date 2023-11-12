@@ -144,7 +144,7 @@ const updateProduct = (Product, link) => {
     
     return (
         <React.Fragment>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '-750px', marginLeft: '300px', border:'2px solid #000', width:'1500px'}}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '-750px', marginLeft: '300px', border:'2px solid #000', width:'1500px',borderRadius:'20px'}}>
         <Stack direction="row" spacing={150} mt={4} mb={5} marginLeft={0}>
           <h2>품목관리</h2>
           <AddProducts addProducts={addProducts} />
