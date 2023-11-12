@@ -148,12 +148,12 @@ const updateCar = (car, link) => {
 
       return (
         <React.Fragment>
-           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '-680px', marginLeft: '170px'}}>
+           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '-750px', marginLeft: '300px', border:'2px solid #000', width:'1500px'}}>
            <Stack direction="row" spacing={133} mt={4} mb={5} marginLeft={0}>
                 <h2>CarList</h2>
                 <AddCar addCar={addCar} />
             </Stack>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom:'50px' }}>
                 <div style={{ width: '100%' }}>
                     <DataGrid
                         rows={cars}
