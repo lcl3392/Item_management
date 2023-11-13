@@ -8,8 +8,9 @@ import Test02 from "../pages/test02";
 import Productlist from "./Productlist";
 
 const MenuBar = () => {
-  const [selectedNode, setSelectedNode] = useState(null);
+  const [selectedNode, setSelectedNode] = useState(null);  //현재 선택된 메뉴 아이템을 추적
 
+  //nodeId를 받아와서 setSelectedNode 함수를 통해 selectedNode 상태를 업데이트
   const handleNodeClick = (nodeId) => {
     setSelectedNode(nodeId);
   };
@@ -25,6 +26,7 @@ const MenuBar = () => {
         defaultExpandIcon={<ChevronRightIcon />}
         sx={{ height: 650, maxWidth: 250, overflowY: "auto" }}
       >
+        {/* nodeId는 각 아이템의 고유한 식별자 */}
         <TreeItem nodeId="1" label="Car">
           <TreeItem nodeId="2" label="Carlist" onClick={() => handleNodeClick("carlist")} />
         </TreeItem>
@@ -36,6 +38,7 @@ const MenuBar = () => {
             </TreeItem> */}
           </TreeItem>
       </TreeView>
+      {/*selectedNode가 "carlist"일 때, Carlist 컴포넌트를 렌더링 */}
       {selectedNode === "carlist" && <Carlist />}
       {selectedNode === "productlist" && <Productlist />}
       {selectedNode === "test02" && <Test02 />}

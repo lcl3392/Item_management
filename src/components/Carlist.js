@@ -42,17 +42,22 @@ function Carlist() {
 
       //목록 삭제
       const onDelClick = (url) => {
-        if (window.confirm("삭제하시겠습니까? (ᵔ-ᵔ)")) {
+        // 사용자에게 삭제 여부를 확인하는 대화상자를 띄웁니다.
+        if (window.confirm("삭제하시겠습니까?")) {
+          // 현재 세션에서 JWT 토큰을 가져옵니다.
           const token = sessionStorage.getItem("jwt"); 
-    
+      
+          // 서버에 DELETE 요청을 보냅니다.
           fetch(url, {
-            method:  'DELETE', 
-            headers: { 'Authorization' : token }
+            method: 'DELETE',  // DELETE 메서드를 사용하여 삭제 요청을 보냅니다.
+            headers: { 'Authorization' : token }  // 요청에 JWT 토큰을 포함시켜 인증합니다.
           })
           .then(response => { 
+            // 서버 응답이 성공적인지 확인합니다.
             if (response.ok) {
+              // 성공하면 자동차 목록을 다시 가져오고, 사용자에게 성공 메시지를 보여줍니다.
               fetchCars();
-              setOpen(true);
+              setOpen(true);  // 어딘가에서 setOpen 함수가 정의되어 있어야 합니다.
             }
             else {
               alert('뭔가 잘못됐어요!');
@@ -65,39 +70,48 @@ function Carlist() {
 
   // 새로운 자동차 추가 
   const addCar = (car) => {
-    const token = sessionStorage.getItem("jwt"); 
+    // 현재 세션에서 JWT 토큰을 가져옵니다.
+    const token = sessionStorage.getItem("jwt");
 
+    // 서버에 POST 요청을 보냅니다.
     fetch(SERVER_URL  +  'api/cars',
-      { method: 'POST', headers: {
-        'Content-Type':'application/json',
-        'Authorization' : token
-      },
-      body: JSON.stringify(car)
+        { method: 'POST', headers: {
+            'Content-Type':'application/json',   // 요청의 본문 형식을 JSON으로 지정합니다.
+            'Authorization' : token              // 요청에 JWT 토큰을 포함시켜 인증합니다.
+        },
+        body: JSON.stringify(car)               // 자동차 정보를 JSON 형식으로 변환하여 요청의 본문에 포함합니다.
     })
     .then(response => {
-      if (response.ok) {
-        fetchCars();
-      }
-      else {
-        alert('Something went wrong!');
-      }
+        // 서버 응답이 성공적인지 확인합니다.
+        if (response.ok) {
+            // 성공하면 자동차 목록을 다시 가져옵니다.
+            fetchCars();
+        }
+        else {
+            // 실패하면 경고 메시지를 표시합니다.
+            alert('Something went wrong!');
+        }
     })
-    .catch(err => console.error(err))
-  }
+    .catch(err => console.error(err));  // 네트워크 오류 등의 예외 상황이 발생하면 콘솔에 에러를 출력합니다.
+}
+
 
 // 자동차 업데이트
 const updateCar = (car, link) => {
+  // 현재 세션에서 JWT 토큰을 가져옵니다.
   const token = sessionStorage.getItem("jwt"); 
 
+  // 서버에 PUT 요청을 보냅니다.
   fetch(link,
     { 
-      method: 'PUT', 
+      method: 'PUT',  // PUT 메서드를 사용하여 업데이트 요청을 보냅니다.
       headers: {
-      'Content-Type':'application/json',
-      'Authorization' : token
-    },
-    body: JSON.stringify(car)
+        'Content-Type':'application/json',  // 요청의 본문 형식을 JSON으로 지정합니다.
+        'Authorization' : token  // 요청에 JWT 토큰을 포함시켜 인증합니다.
+      },
+      body: JSON.stringify(car)  // 자동차 정보를 JSON 형식으로 변환하여 요청의 본문에 포함합니다.
   })
+
   .then(response => {
     if (response.ok) {
       fetchCars();

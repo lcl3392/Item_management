@@ -10,56 +10,63 @@ import { useEffect } from 'react';
 import MenuBar from './MenuBar.js';
 
 function Login() {
+  // 사용자 정보와 인증 상태, Snackbar 표시 여부를 관리하는 상태 변수들을 초기화
   const [user, setUser] = useState({
     username: '', 
     password: ''
   });
   const [isAuthenticated, setAuth] = useState(false);
-  const [open, setOpen] = useState(false);             //Snackbar 표시 여부를 제어할 open 상태
-  
+  const [open, setOpen] = useState(false); // Snackbar 표시 여부를 제어할 open 상태
+
+  // 입력 폼의 값이 변경될 때 호출되는 이벤트 핸들러
   const handleChange = (event) => {
     setUser({...user, [event.target.name] : event.target.value});
   }
   
-  // 인증이 실패하면 open 상태 값을 true로 설정해 Snackbar 컴포넌트 표시
+  // 로그인 시도 
   const login = () => {
+    // 사용자 이름 또는 암호 중 하나라도 비어 있을 때 로그인 시도 방지
     if (!user.username || !user.password) {
-        // 사용자 이름 또는 암호 중 하나라도 비어 있을 때 로그인 시도 방지
-        setOpen(true);
-        return;
-      }
-      
+      setOpen(true); // Snackbar를 열어 사용자에게 경고를 표시
+      return;
+    }
+
+    // 서버에 로그인 요청
     fetch(SERVER_URL + 'login', {
       method: 'POST',
       headers: { 'Content-Type':'application/json' },
       body: JSON.stringify(user)
     })
     .then(res => {
+      // 서버 응답에서 Authorization 헤더로부터 JWT 토큰을 가져옴
       const jwtToken = res.headers.get('Authorization');
       if (jwtToken !== null) {
+        // JWT 토큰을 세션 스토리지에 저장하고, 인증 상태를 true로 변경
         sessionStorage.setItem("jwt", jwtToken);
         setAuth(true);
-      }
-      else {
+      } else {
+        // 토큰이 없으면 인증 실패로 간주하고 Snackbar를 연다
         setOpen(true);
       }
     })
-    .catch(err => console.error(err))
+    .catch(err => console.error(err));
   }
 
+  
+  // 컴포넌트가 로드될 때 세션 스토리지에서 인증 상태를 확인(로그인 하면 carlist 페이지 유지)
+  useEffect(() => {
+    if (sessionStorage.getItem("jwt")) {
+      setAuth(true);
+    }
+  }, []);
+  
   //로그아웃 
     const logout = () => {
-        if (window.confirm("정말..? 로그아웃하시겠습니까? (ᵔ-ᵔ)")) {
+        if (window.confirm("로그아웃하시겠습니까?")) {
         sessionStorage.removeItem("jwt");  // 세션 스토리지에서 토큰 제거
         setAuth(false);                    // isAuthenticated 상태 값을 false로 변경
     }}
 
-  // 컴포넌트가 로드될 때 세션 스토리지에서 인증 상태를 확인(로그인 하면 carlist 페이지 유지)
-    useEffect(() => {
-        if (sessionStorage.getItem("jwt")) {
-        setAuth(true);
-        }
-    }, []);
 
     return (
         <div>
