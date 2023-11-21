@@ -13,7 +13,7 @@ function EditCar(props) {
   const [open, setOpen] = useState(false);
   const [car, setCar] = useState({
     brand: '', model: '', color: '',  
-    year: '', fuel:'', price:  '', registerNumber:''
+    vehicleYear: '', fuel:'', price:  '', registerNumber:''
   });
     
   // 모달 폼 열기
@@ -22,7 +22,7 @@ function EditCar(props) {
       brand: props.data.row.brand,
       model: props.data.row.model,
       color: props.data.row.color,
-      year: props.data.row.year,
+      vehicleYear: props.data.row.vehicleYear,
       fuel: props.data.row.fuel,
       price: props.data.row.price, 
       registerNumber:props.data.row.registerNumber
@@ -64,8 +64,8 @@ function EditCar(props) {
             <TextField label="Color" name="color" 
               variant="standard" value={car.color} 
               onChange={handleChange}/>
-            <TextField label="Year" name="year" 
-              variant="standard" value={car.year} 
+            <TextField label="Year" name="vehicleYear" 
+              variant="standard" value={car.vehicleYear} 
               onChange={handleChange}/>
             <TextField label="Price" name="price" 
               variant="standard" value={car.price} 

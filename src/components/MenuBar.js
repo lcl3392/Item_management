@@ -4,8 +4,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
 import Carlist from "./Carlist";
-import Test02 from "../pages/test02";
 import Productlist from "./Productlist";
+import Ownerlist from "./Ownerlist";
+import SaveOwner from "./SaveOwner";
+import Test from "../pages/Test";
 
 const MenuBar = () => {
   const [selectedNode, setSelectedNode] = useState(null);  //현재 선택된 메뉴 아이템을 추적
@@ -28,20 +30,22 @@ const MenuBar = () => {
       >
         {/* nodeId는 각 아이템의 고유한 식별자 */}
         <TreeItem nodeId="1" label="Car">
-          <TreeItem nodeId="2" label="Carlist" onClick={() => handleNodeClick("carlist")} />
+          <TreeItem nodeId="2" label="Car list" onClick={() => handleNodeClick("carlist")} />
+          <TreeItem nodeId="6" label="Owner">
+              <TreeItem nodeId="8" label="Owner list" onClick={() => handleNodeClick("ownerlist")} />
+            </TreeItem>
         </TreeItem>
         <TreeItem nodeId="5" label="관리대장">
             <TreeItem nodeId="9" label="품목관리" onClick={() => handleNodeClick("productlist")} />
-            <TreeItem nodeId="10" label="품질관리" onClick={() => handleNodeClick("test02")} />
-            {/* <TreeItem nodeId="6" label="MUI">
-              <TreeItem nodeId="8" label="index.js" />
-            </TreeItem> */}
+            <TreeItem nodeId="10" label="품질관리" onClick={() => handleNodeClick("test")} />
           </TreeItem>
       </TreeView>
       {/*selectedNode가 "carlist"일 때, Carlist 컴포넌트를 렌더링 */}
       {selectedNode === "carlist" && <Carlist />}
       {selectedNode === "productlist" && <Productlist />}
-      {selectedNode === "test02" && <Test02 />}
+      {selectedNode === "Save" && <SaveOwner />}
+      {selectedNode === "ownerlist" && <Ownerlist />}
+      {selectedNode === "test" && <Test />}
     </div>
   );
 };

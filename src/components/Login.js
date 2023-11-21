@@ -81,8 +81,8 @@ function Login() {
       </div>
       
           ) : (
-            <Box border={2} p={5} borderRadius={5} width={300} style={{ margin: '0 auto', borderColor: '#1976d2', paddingTop: 10, marginTop: 190}}>
-            <Stack spacing={3} alignItems='center' mt={10} style={{ marginTop: 55}}>
+            <Box border={2} p={5} borderRadius={5} width={300} style={{ margin: '0 auto', borderColor: '#1976d2', padding: '10px 30px 50px 30px', marginTop: 200}}>
+            <Stack spacing={3} alignItems='center' mt={10} style={{ marginTop: 40}}>
                  <Typography variant="h4"  color="primary" gutterBottom>
                     Login
                 </Typography>
@@ -99,7 +99,8 @@ function Login() {
                 onChange={handleChange}
                 onKeyPress={(event) => { if (event.key === "Enter") { login();}}} />
               <Button 
-                variant="outlined" 
+              style={{padding: '6px 90px'}}
+               variant="contained" 
                 color="primary" 
                 onClick={login}>
                   Login

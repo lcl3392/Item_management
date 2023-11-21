@@ -15,7 +15,7 @@ function App() {
 
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h4" marginLeft={43}>
+          <Typography variant="h4" marginLeft={36}>
             Managerial Ledger 
           </Typography>
         </Toolbar>

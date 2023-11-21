@@ -1,11 +1,15 @@
 import React from 'react';
 
-function test02() {
+function Test() {
     return (
         <div>
-            준비중 입니다.
+            준비중입니다.
         </div>
     );
 }
 
-export default test02;
+export default Test;
+
+
+
+

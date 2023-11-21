@@ -7,6 +7,9 @@ import AddProducts from './AddProducts';
 import EditProducts from './EditProducts';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Icon from '@mdi/react';
+import { mdiCarSearch } from '@mdi/js';
+
 
 //GridToolbarContainer,Export 컴포넌트로 Export 버튼을 렌더링하는 toolbar 컴포넌트
 function CustomToolbar() {
@@ -20,32 +23,38 @@ function CustomToolbar() {
 function Productlist() {
     const [products, setProducts] = useState([]);
     const [open, setOpen] = useState(false);
+    const [search, setSearch] = useState('');
+    
 
     useEffect(() => {
        fetchProducts();
-    }, []);
+    }, [search]);
 
     const fetchProducts = () => {
       //세션 저장소에서 토큰을 읽고 
       //Authorization 헤더에 이를 포함한다.
       const token = sessionStorage.getItem("jwt");
 
-        fetch(SERVER_URL + 'api/products' ,{
-          headers: { 'Authorization' : token }
+      const url = search
+      ? `${SERVER_URL}api/products/search/findBy품목코드?품목코드=${search}`
+      : `${SERVER_URL}api/products`;
+
+        fetch(url ,{
+          headers: { Authorization : token }
         })
-        .then(response => response.json())
-        .then(data => setProducts(data._embedded.products))
-        .catch(err => console.error(err));
+        .then((response) => response.json())
+        .then((data) => setProducts(data._embedded.products))
+        .catch((err) => console.error(err));
     }
 
     const columnPr = [
-        { field: '품목코드', headerName: '품목코드', width: 200, headerAlign: 'center', align: 'center' },
-        { field: '품목이름', headerName: '품목이름', width: 200, headerAlign: 'center', align: 'center' },
+        { field: '품목코드', headerName: '품목코드', width: 180, headerAlign: 'center', align: 'center' },
+        { field: '품목이름', headerName: '품목이름', width: 190, headerAlign: 'center', align: 'center' },
         { field: '규격', headerName: '규격', width: 140, headerAlign: 'center', align: 'center' },
         { field: '수량', headerName: '수량', width: 140, headerAlign: 'center', align: 'center' },
-        { field: '단가', headerName: '단가', width: 200, headerAlign: 'center', align: 'center' },
-        { field: '비고', headerName: '비고', width: 200, headerAlign: 'center', align: 'center' },
-        { field: '사용여부', headerName: '사용여부', width: 150, headerAlign: 'center', align: 'center' },
+        { field: '단가', headerName: '단가', width: 190, headerAlign: 'center', align: 'center' },
+        { field: '비고', headerName: '비고', width: 190, headerAlign: 'center', align: 'center' },
+        { field: '사용여부', headerName: '사용여부', width: 140, headerAlign: 'center', align: 'center' },
         {
             field: '_links.car.href',
             headerName: '수정',
@@ -95,60 +104,65 @@ function Productlist() {
         }
     }
 
-     //품목 추가 
-  const addProducts = (product) => {
-    const token = sessionStorage.getItem("jwt"); 
+      //품목 추가 
+    const addProducts = (product) => {
+      const token = sessionStorage.getItem("jwt"); 
 
-    fetch(SERVER_URL  +  'api/products',
-      { method: 'POST', 
-        headers: {
-         'Content-Type':'application/json',
+      fetch(SERVER_URL  +  'api/products',
+        { method: 'POST', 
+          headers: {
+          'Content-Type':'application/json',
+            'Authorization' :token
+          },
+        body: JSON.stringify(product)
+      })
+      .then(response => {
+        if (response.ok) {
+          fetchProducts();
+        }
+        else {
+          alert('Something went wrong!');
+        }
+      })
+      .catch(err => console.error(err))
+    }
+
+    // 품목 업데이트
+  const updateProduct = (Product, link) => {
+      const token = sessionStorage.getItem("jwt"); 
+    
+      fetch(link,
+        { 
+          method: 'PUT', 
+          headers: {
+          'Content-Type':'application/json',
           'Authorization' :token
         },
-      body: JSON.stringify(product)
-    })
-    .then(response => {
-      if (response.ok) {
-        fetchProducts();
-      }
-      else {
-        alert('Something went wrong!');
-      }
-    })
-    .catch(err => console.error(err))
-  }
-
-  // 품목 업데이트
-const updateProduct = (Product, link) => {
-    const token = sessionStorage.getItem("jwt"); 
-  
-    fetch(link,
-      { 
-        method: 'PUT', 
-        headers: {
-        'Content-Type':'application/json',
-        'Authorization' :token
-      },
-      body: JSON.stringify(Product)
-    })
-    .then(response => {
-      if (response.ok) {
-        fetchProducts();
-      }
-      else {
-        alert('Something went wrong!');
-      }
-    })
-    .catch(err => console.error(err))
-  }
+        body: JSON.stringify(Product)
+      })
+      .then(response => {
+        if (response.ok) {
+          fetchProducts();
+        }
+        else {
+          alert('Something went wrong!');
+        }
+      })
+      .catch(err => console.error(err))
+    }
     
     return (
         <React.Fragment>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '-750px', marginLeft: '300px', border:'2px solid #000', width:'1500px',borderRadius:'20px'}}>
-        <Stack direction="row" spacing={150} mt={4} mb={5} marginLeft={0}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '-750px', marginLeft: '300px', border:'2px solid #000', width:'1500px',borderRadius:'5px'}}>
+        <div style={{ position: 'relative', top: '100px', left:'380px' }}>
+              <Icon path={mdiCarSearch} size={1.5} />
+              <input type="text" placeholder="검색어를 입력해주세요." value={search} onChange={(event) => setSearch(event.target.value)} style={{width:'500px',height:'30px'}}/>
+        </div>
+        
+        <Stack direction="row" spacing={140} mt={1} mb={10}>
           <h2>품목관리</h2>
           <AddProducts addProducts={addProducts} />
-      </Stack>
+        </Stack>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  marginBottom:'50px' }}>
             <div style={{ width: '100%' }}>
             <DataGrid
@@ -157,6 +171,7 @@ const updateProduct = (Product, link) => {
             disableSelectionOnClick={true}
             getRowId={row => row._links.self.href}
             components={{ Toolbar: CustomToolbar }}
+            // checkboxSelection
                 />
                 </div>
             </div>

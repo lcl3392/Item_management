@@ -13,7 +13,7 @@ function AddCar(props) {
     brand: '',
     model: '',
     color: '', 
-    year: '',  
+    vehicleYear: '',  
     fuel: '',  
     price: '',
     registerNumber: ''
@@ -36,7 +36,7 @@ const handleSave = () => {
     brand: '',
     model: '',
     color: '',
-    year: '',
+    vehicleYear: '',
     fuel: '',
     price: '',
     registerNumber: ''
@@ -64,8 +64,8 @@ const handleSave = () => {
             <TextField label="Color" name="color" 
               variant="standard" value={car.color} 
               onChange={handleChange}/>
-            <TextField label="Year" name="year" 
-              variant="standard" value={car.year} 
+            <TextField label="Year" name="vehicleYear" 
+              variant="standard" value={car.vehicleYear} 
               onChange={handleChange}/>
             <TextField label="Price" name="price" 
               variant="standard" value={car.price} 
