@@ -76,20 +76,7 @@ useEffect(() => {
     }
   }, []);
 ```
-***
-- useState를 사용한 상태 변수
-  + user: 사용자의 입력값을 관리하는 객체(username과 password를 갖음).
-  + isAuthenticated: 사용자의 로그인 상태를 나타내는 상태 변수.
-  + open: Snackbar 표시 여부를 제어하는 상태 변수.
-    
- ```
-const [user, setUser] = useState({
-    username: '', 
-    password: ''
-  });
-  const [isAuthenticated, setAuth] = useState(false);
-  const [open, setOpen] = useState(false);
-```
+
 ***
 ## 메인 화면_1 (기능 설명)
 ![관리_메인1](https://github.com/lcl3392/Item_management/assets/133613544/06b3f717-b18d-4da8-b447-166604349981)
