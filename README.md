@@ -2,6 +2,9 @@
 - 서버에서 자동차, 물품, 고객 데이터를 가져와 목록을 표시하고 관리하는 React 애플리케이션
 - 데이터 추가, 수정, 삭제, 검색 하는 기능을 제공하며, MUI Data Grid를 사용하여 데이터를 효과적으로 표시합니다.
 
+## Tech Stack
+Spring Boot, Spring, Java, React, MariaDB, MUI, Postman 
+
 ***
 ## code 설명 
 
