@@ -4,6 +4,7 @@
 
 ## Tech Stack
 Spring Boot, Spring, Java, React, MariaDB, MUI, Postman 
+- 서버 배포 : Heroku
 
 ***
 ## code 설명 
